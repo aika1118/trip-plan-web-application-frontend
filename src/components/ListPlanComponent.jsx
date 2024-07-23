@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { getAllPlans } from '../services/PlanService';
+import { getAllPlansAPI } from '../services/PlanService';
 
 const ListPlanComponent = () => {
 
     function addNewPlans(){
-        navigator('/add-plan') // 해당 경로로 이동시킴
+        navigator('/edit-plan') // 해당 경로로 이동시킴
         // 이후 app.jsx의 router에 따라 PlanComponent가 렌더링됨
         // 해당 component에서 새로운 plan 추가 작업 진행
     }
@@ -22,22 +22,15 @@ const ListPlanComponent = () => {
 
     // 모든 Plan 정보를 서버에서 받아와서 state variable에 set
     async function listPlans(){
-        const response = await getAllPlans().catch(error => console.error(error)) 
-        console.log(response.data)
+        const response = await getAllPlansAPI().catch(error => console.error(error)) 
 
         // 정상적으로 response 받으면 employees에 reponse.data로 state 갱신
         setPlans(response.data)
     }
 
-    // function addNewEmployee(){
-    //     navigator('/add-employee') // 해당 경로로 이동시킴
-    //     // 이후 app.jsx의 router에 따라 EmployeeComponent가 렌더링됨
-    //     // 해당 component에서 새로운 employee 추가 작업 진행
-    // }
-
-    // function updateEmployee(id){
-    //     navigator(`/edit-employee/${id}`)
-    // }
+    function updatePlanAPI(id){
+        navigator(`/edit-plan/${id}`)
+    }
 
     // function removeEmployee(id){
     //     console.log(id);
@@ -68,8 +61,8 @@ const ListPlanComponent = () => {
                                 <td>{plan.planName}</td>
                                 <td>
                                     {/* 매개변수가 있기 때문에 화살표 함수 사용 */}
-                                    {/* <button className='btn btn-info' onClick={() => updateEmployee(employee.id)}>Update</button>
-                                    <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)}
+                                    <button className='btn btn-info' onClick={() => updatePlanAPI(plan.planId)}>Update</button>
+                                    {/* <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)}
                                         style={{marginLeft: '10px'}}
                                     >Delete</button> */}
                                 </td>

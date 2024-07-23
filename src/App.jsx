@@ -15,8 +15,10 @@ function App() {
                   <Route path='/' element = {<ListPlanComponent/>}></Route>
                   {/* http://localhost:3000/plans */}
                   <Route path='/plans' element = {<ListPlanComponent/>}></Route>
-                  {/* http://localhost:3000/add-plan */}
-                  <Route path='/add-plan' element = {<PlanComponent/>}></Route>
+                  {/* http://localhost:3000/edit-plan */}
+                  <Route path='/edit-plan' element = {<PlanComponent/>}></Route>
+                  {/* http://localhost:3000/edit-plan/id */}
+                  <Route path='edit-plan/:id' element = {<PlanComponent/>}></Route>
               </Routes>
             <FooterComponent/>
         </BrowserRouter>
