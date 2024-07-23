@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { getAllPlansAPI } from '../services/PlanService';
+import { deletePlanAPI, getAllPlansAPI } from '../services/PlanService';
 
 const ListPlanComponent = () => {
 
@@ -32,15 +32,20 @@ const ListPlanComponent = () => {
         navigator(`/edit-plan/${id}`)
     }
 
-    // function removeEmployee(id){
-    //     console.log(id);
+    async function deletePlan(id){ 
+        console.log(id);
 
-    //     deleteEmployee(id).then((response) => { // delete REST API 호출 발생
-    //         getAllEmployees(); // delete 성공 후 페이지 구성을 위해 DB 정보를 다시 받아와서 state variable 갱신
-    //     }).catch(error => {
-    //         console.error(error)
-    //     })
-    // }
+        // 차후 bootstrap으로 더 깔끔한 삭제 확인창을 띄워보자
+        const confirmed = window.confirm("Are you sure you want to delete this plan?");
+        if (!confirmed)
+            return
+        
+        // delete REST API 호출 발생
+        const response = await deletePlanAPI(id).catch(error => console.error(error))
+
+        // delete 성공 후 페이지 구성을 위해 DB 정보를 다시 받아와서 state variable 갱신
+        getAllPlans();
+    }
 
     return (
         <div className='container'>
@@ -49,8 +54,9 @@ const ListPlanComponent = () => {
             <table className='table table-striped table-bordered'>
                 <thead>
                     <tr>
-                        <th style={{width: '90%'}}>Plan Name</th>
-                        <th style={{width: '10%'}}>Actions</th>
+                        <th style={{width: '80%'}}>Plan Name</th>
+                        <th style={{width: '10%'}}>Update</th>
+                        <th style={{width: '10%'}}>Delete</th>
                     </tr>
                 </thead>
 
@@ -61,10 +67,10 @@ const ListPlanComponent = () => {
                                 <td>{plan.planName}</td>
                                 <td>
                                     {/* 매개변수가 있기 때문에 화살표 함수 사용 */}
-                                    <button className='btn btn-info' onClick={() => updatePlan(plan.planId)}>Update</button>
-                                    {/* <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)}
-                                        style={{marginLeft: '10px'}}
-                                    >Delete</button> */}
+                                    <button className='btn btn-info' onClick={() => updatePlan(plan.planId)}>Update</button>                                
+                                </td>
+                                <td>
+                                    <button className='btn btn-danger' onClick={() => deletePlan(plan.planId)}>Delete</button>
                                 </td>
                             </tr>
                         )
