@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPlanAPI, getPlanAPI, updatePlanAPI } from '../services/PlanService';
 
+/**
+ * PlanComponent
+ * 
+ * Plan을 Create 또는 Update 할 수 있는 Component 입니다.
+ * Path Parameter로 id가 존재하면 Update를 진행합니다. (http://localhost:3000/edit-plan/id)
+ * 그렇지 않으면 Create를 진행합니다. (http://localhost:3000/edit-plan)
+ */
+
 const PlanComponent = () => {
     // 상태변수, 상태변수 변화시키는 함수
     const [planName, setPlanName] = useState('')

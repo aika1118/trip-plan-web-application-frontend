@@ -1,5 +1,11 @@
 import React from 'react'
 
+/**
+ * FooterComponent
+ * 
+ * 페이지의 Footer를 구성하는 component 입니다.
+ */
+
 const FooterComponent = () => {
   return (
     <div>

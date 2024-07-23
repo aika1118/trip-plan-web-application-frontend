@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { deletePlanAPI, getAllPlansAPI } from '../services/PlanService';
 
+/**
+ * ListPlanComponent
+ * 
+ * 모든 Plan을 테이블 형태로 보여주는 component 입니다.
+ * update 버튼을 눌러서 Plan을 update 할 수 있습니다.
+ * delete 버튼을 눌러서 Plan을 delete 할 수 있습니다.
+ */
+
 const ListPlanComponent = () => {
 
     function addNewPlans(){

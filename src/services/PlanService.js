@@ -1,5 +1,12 @@
 import axios from "axios"
 
+/**
+ * PlanService
+ * 
+ * Plan에 대해 GET, POST, PUT, DELETE의 REST API를 호출하는 함수를 선언 및 정의합니다.
+ * 
+ */
+
 
 const BASE_REST_API_URL = 'http://localhost:8080/api/plans';
 

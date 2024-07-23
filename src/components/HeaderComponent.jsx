@@ -1,6 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+/**
+ * HeaderComponent
+ * 
+ * 페이지의 Header를 구성하는 component 입니다.
+ */
+
 const HeaderComponent = () => {
   return (
     <div>
