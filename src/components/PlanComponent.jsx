@@ -32,15 +32,16 @@ const PlanComponent = () => {
     }
 
     // submit 버튼 눌릴 때 ADD or UPDATE 진행
-    async function saveOrupdatePlanAPI(e){
+    async function saveOrupdatePlan(e){
         e.preventDefault(); // submit form 하기 전 default activity 방지 
 
         if (!validateForm()) // 입력된 input값이 유효하지 않을 때 바로 return 처리
             return;
 
-        const plan = {planName, userId} // 차후 실제 로그인한 유저의 userId set 필요
+        const plan = {planName} // plan에서 update 필요한 정보 (planId, userId는 고정)
         console.log(plan)
         
+        // id(planId)는 기본키로 plan을 고유하게 식별할 수 있는 값
         if (id){ // 현재 URL에 params id가 있음 = Update 연산
             const response = await updatePlanAPI(id, plan).catch(error => console.error(error))
             console.log(response.data)
@@ -110,7 +111,7 @@ const PlanComponent = () => {
                                 {errors.planName && <div className='invalid-feedback'>{errors.planName}</div>} {/*firstName에 error 문구가 저장된 경우 실행*/}
                             </div>
 
-                            <button className='btn btn-success' onClick={saveOrupdatePlanAPI}>Submit</button>
+                            <button className='btn btn-success' onClick={saveOrupdatePlan}>Submit</button>
                         </form>
                     </div>
                 </div>

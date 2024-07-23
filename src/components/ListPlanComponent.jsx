@@ -17,18 +17,18 @@ const ListPlanComponent = () => {
     
     // 컴포넌트가 렌더링된 이후에 실행
     useEffect(() => {
-        listPlans();
+        getAllPlans();
     }, []) // 빈 배열: 이 이펙트는 컴포넌트가 렌더링 될 때마다 실행됨
 
     // 모든 Plan 정보를 서버에서 받아와서 state variable에 set
-    async function listPlans(){
+    async function getAllPlans(){
         const response = await getAllPlansAPI().catch(error => console.error(error)) 
 
         // 정상적으로 response 받으면 employees에 reponse.data로 state 갱신
         setPlans(response.data)
     }
 
-    function updatePlanAPI(id){
+    function updatePlan(id){
         navigator(`/edit-plan/${id}`)
     }
 
@@ -61,7 +61,7 @@ const ListPlanComponent = () => {
                                 <td>{plan.planName}</td>
                                 <td>
                                     {/* 매개변수가 있기 때문에 화살표 함수 사용 */}
-                                    <button className='btn btn-info' onClick={() => updatePlanAPI(plan.planId)}>Update</button>
+                                    <button className='btn btn-info' onClick={() => updatePlan(plan.planId)}>Update</button>
                                     {/* <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)}
                                         style={{marginLeft: '10px'}}
                                     >Delete</button> */}
