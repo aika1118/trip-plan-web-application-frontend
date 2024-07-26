@@ -17,6 +17,7 @@ const PlanComponent = () => {
 
     const {id} = useParams(); //  현재 URL 경로의 매개변수(params)에 접근
 
+    // 이름 유효성 검사에 사용
     const [errors, setErrors] = useState({
         planName: ''
     })
@@ -46,7 +47,7 @@ const PlanComponent = () => {
         if (!validateForm()) // 입력된 input값이 유효하지 않을 때 바로 return 처리
             return;
 
-        const plan = {planName} // plan에서 update 필요한 정보 (planId, userId는 고정)
+        const plan = {planName, userId} // plan은 JSON 형태로 서버에 전달된다
         console.log(plan)
         
         // id(planId)는 기본키로 plan을 고유하게 식별할 수 있는 값
@@ -116,7 +117,7 @@ const PlanComponent = () => {
                                     onChange={(e) => setPlanName(e.target.value)} // e.target.value : event 객체에서 입력값을 가져옴
                                 >          
                                 </input>
-                                {errors.planName && <div className='invalid-feedback'>{errors.planName}</div>} {/*firstName에 error 문구가 저장된 경우 실행*/}
+                                {errors.planName && <div className='invalid-feedback'>{errors.planName}</div>} {/*planName에 error 문구가 저장된 경우 실행*/}
                             </div>
 
                             <button className='btn btn-success' onClick={saveOrupdatePlan}>Submit</button>

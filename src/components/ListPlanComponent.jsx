@@ -32,7 +32,7 @@ const ListPlanComponent = () => {
     async function getAllPlans(){
         const response = await getAllPlansAPI().catch(error => console.error(error)) 
 
-        // 정상적으로 response 받으면 employees에 reponse.data로 state 갱신
+        // 정상적으로 response 받으면 reponse.data로 state 갱신
         setPlans(response.data)
     }
 
@@ -59,7 +59,7 @@ const ListPlanComponent = () => {
         <div className='container'>
             <h2 className='text-center'>List of Plan</h2>
             <button className='btn btn-primary mb-2' onClick={addNewPlans}>Add Plans</button>
-            <table className='table table-striped table-bordered'>
+            <table className='table table-bordered table-hover'>
                 <thead>
                     <tr>
                         <th style={{width: '80%'}}>Plan Name</th>
@@ -71,8 +71,11 @@ const ListPlanComponent = () => {
                 <tbody>
                     {
                         plans.map(plan => // 모든 plan 순회
-                            <tr key={plan.planId}>
-                                <td>{plan.planName}</td>
+                            <tr key={plan.planId} >
+                                <td
+                                    onClick={() => navigator(`/daily-plans/${plan.planId}`)} // 클릭 시 해당하는 plan의 daily plan 경로로 이동
+                                    style={{ cursor: 'pointer' }} 
+                                >{plan.planName}</td>
                                 <td>
                                     {/* 매개변수가 있기 때문에 화살표 함수 사용 */}
                                     <button className='btn btn-info' onClick={() => updatePlan(plan.planId)}>Update</button>                                
