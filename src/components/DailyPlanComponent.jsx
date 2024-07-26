@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { createPlanAPI, getPlanAPI, updatePlanAPI } from '../services/PlanService';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createDailyPlanAPI, getDailyPlanAPI, updateDailyPlanAPI } from '../services/DailyPlanService';
 
 /**
@@ -27,7 +26,7 @@ const DailyPlanComponent = () => {
     })
 
 
-    // update 
+    // URL 파라미터에 값이 설정되어 변동이 생길 때 실행 
     useEffect(() => { 
         console.log(params)
 
@@ -72,8 +71,7 @@ const DailyPlanComponent = () => {
         return valid;
     }
 
-    // params 유무에 따라 동적으로 title 변경
-    // add, update 버튼 누를 떄 모두 현재 component가 렌더링되지만 dailyIdFromParams 등 params 유무에 따라 title은 다르게 표시함
+    // params 객체에 할당된 값에 따라 동적으로 title 변경
     function pageTitle(){
         if (params.dailyIdFromParamsWhenUpdate){ // update 인 경우
             return <h2 className='text-center'>Update Daily Plan</h2>
@@ -99,7 +97,7 @@ const DailyPlanComponent = () => {
         if (params.dailyIdFromParamsWhenUpdate){ // Update 연산
             const response = await updateDailyPlanAPI(params.dailyIdFromParamsWhenUpdate, dailyPlan).catch(error => console.error(error))
             console.log(response.data)
-            navigator(`/daily-plans/${response.data.planId}`)
+            navigator(`/daily-plans/${response.data.planId}`) // plan component로 돌아가기
 
             return
         }
@@ -107,7 +105,7 @@ const DailyPlanComponent = () => {
         // Add 연산
         const response = await createDailyPlanAPI(dailyPlan).catch(error => console.error(error))
         console.log(response.data);
-        navigator(`/daily-plans/${response.data.planId}`)
+        navigator(`/daily-plans/${response.data.planId}`) // plan component로 돌아가기
     }
 
     return (
