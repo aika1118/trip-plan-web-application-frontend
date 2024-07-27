@@ -15,19 +15,20 @@ function App() {
               <Routes>
                   {/* http://localhost:3000 */}
                   <Route path='/' element = {<ListPlanComponent/>}></Route>
+
                   {/* http://localhost:3000/plans */}
                   <Route path='/plans' element = {<ListPlanComponent/>}></Route>
                   {/* http://localhost:3000/edit-plan */}
                   <Route path='/edit-plan' element = {<PlanComponent/>}></Route>
-                  {/* http://localhost:3000/edit-plan/id */}
-                  <Route path='/edit-plan/:id' element = {<PlanComponent/>}></Route>
+                  {/* http://localhost:3000/edit-plan/{planIdFromParamsWhenUpdate} */}
+                  <Route path='/edit-plan/:planIdFromParamsWhenUpdate' element = {<PlanComponent/>}></Route>
 
-                  {/* http://localhost:3000/daily-plan/{planIdFromParams} */}
+                  {/* http://localhost:3000/daily-plans/{planIdFromParams} */}
                   <Route path='/daily-plans/:planIdFromParams' element = {<ListDailyPlanComponent/>}></Route>
                   {/* http://localhost:3000/daily-plan/add/{planIdFromParamsWhenAdd} */}
-                  <Route path='/daily-plan/add/:planIdFromParamsWhenAdd' element = {<DailyPlanComponent/>}></Route>
+                  <Route path='/daily-plans/add/:planIdFromParamsWhenAdd' element = {<DailyPlanComponent/>}></Route>
                   {/* http://localhost:3000/daily-plan/update/{dailyIdFromParamsWhenUpdate} */}
-                  <Route path='/daily-plan/update/:dailyIdFromParamsWhenUpdate' element = {<DailyPlanComponent/>}></Route>
+                  <Route path='/daily-plans/update/:dailyIdFromParamsWhenUpdate' element = {<DailyPlanComponent/>}></Route>
                   
               </Routes>
             <FooterComponent/>

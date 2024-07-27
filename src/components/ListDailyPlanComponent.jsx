@@ -61,12 +61,12 @@ const ListDailyPlanComponent = () => {
     }
 
     // 현재 plan에 daily plan 추가
-    function addNewDailyPlans(planId){
-        navigator(`/daily-plan/add/${planId}`)
+    function addDailyPlan(planId){
+        navigator(`/daily-plans/add/${planId}`)
     }
 
     function updateDailyPlan(dailyId){
-        navigator(`/daily-plan/update/${dailyId}`)
+        navigator(`/daily-plans/update/${dailyId}`)
     }
     
     async function deleteDailyPlan(dailyId){
@@ -89,7 +89,7 @@ const ListDailyPlanComponent = () => {
     return (
         <div className='container'>
             <h2 className='text-center'>{planName}</h2>
-            <button className='btn btn-primary mb-2' onClick={() => addNewDailyPlans(planId)}>Add Daily Plans</button>
+            <button className='btn btn-primary mb-2' onClick={() => addDailyPlan(planId)}>Add Daily Plans</button>
             <table className='table table-bordered table-hover'>
                 <thead>
                     <tr>

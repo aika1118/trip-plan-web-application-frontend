@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPlanAPI, getPlanAPI, updatePlanAPI } from '../services/PlanService';
+import { getUserIdAPI } from '../services/UserService';
 
 /**
  * PlanComponent
  * 
  * Plan을 Create 또는 Update 할 수 있는 Component 입니다.
- * Path Parameter로 id가 존재하면 Update를 진행합니다. (http://localhost:3000/edit-plan/id)
+ * Path Parameter로 id가 존재하면 Update를 진행합니다. (http://localhost:3000/edit-plan/planIdFromParamsWhenUpdate)
  * 그렇지 않으면 Create를 진행합니다. (http://localhost:3000/edit-plan)
  */
 
 const PlanComponent = () => {
     // 상태변수, 상태변수 변화시키는 함수
     const [planName, setPlanName] = useState('')
-    const [userId, setUserId] = useState(2)
-
-    const {id} = useParams(); //  현재 URL 경로의 매개변수(params)에 접근
+    
+    const {planIdFromParamsWhenUpdate} = useParams(); //  현재 URL 경로의 매개변수(params)에 접근
 
     // 이름 유효성 검사에 사용
     const [errors, setErrors] = useState({
@@ -23,19 +23,37 @@ const PlanComponent = () => {
     })
 
     const navigator = useNavigate();
+
+    // 테스트를 위해 임시로 로그인한 username 지정
+    // 차후 로그인 후 sessionStorage에서 username 가져오도록 수정
+    const USER_NAME_FOR_TEST = 'wskang'
+    const [userId, setUserId] = useState()
+
+    useEffect(() => {
+
+        getUserId(USER_NAME_FOR_TEST)
+
+    }, []) // component 렌더링 때 실행하여 userId를 상태변수에 저장
+
+    // username을 통해 userId 가져오기 (using REST API)
+    async function getUserId(USER_NAME_FOR_TEST){
+        const response = await getUserIdAPI(USER_NAME_FOR_TEST).catch(error => console.error(error))
+        setUserId(response.data)
+    }
+
     
     useEffect(() => { 
 
-        if (!id) // 현재 URL에 id params가 없는 경우는 return (Update가 아닌 경우)
+        if (!planIdFromParamsWhenUpdate) // 현재 URL에 planIdFromParamsWhenUpdate params가 없는 경우는 return (Update가 아닌 경우)
             return;
 
-        setPlanState(id) // 상태변수에 plan 정보 set
+        setPlanState(planIdFromParamsWhenUpdate) // 상태변수에 plan 정보 set
 
-    }, [id]) // id가 변경될 때마다 useEffect()의 내부함수가 실행됨 (id params가 포함된 URL이 불릴 때 id가 변경되었을지 체크 후 값 update)
-    // "/edit-plan/id" 접근 시 form input에 state variable이 입력된 상태로 노출됨 (사용자가 값을 update하기 편하도록)
+    }, [planIdFromParamsWhenUpdate]) // id가 변경될 때마다 useEffect()의 내부함수가 실행됨 (planIdFromParamsWhenUpdate params가 포함된 URL이 불릴 때 id가 변경되었을지 체크 후 값 update)
+    // "/edit-plan/planIdFromParamsWhenUpdate" 접근 시 form input에 state variable이 입력된 상태로 노출됨 (사용자가 값을 update하기 편하도록)
 
-    async function setPlanState(id){
-        const response = await getPlanAPI(id).catch(error => console.error(error))
+    async function setPlanState(planIdFromParamsWhenUpdate){
+        const response = await getPlanAPI(planIdFromParamsWhenUpdate).catch(error => console.error(error))
         console.log(response)
         setPlanName(response.data.planName)
     }
@@ -50,9 +68,9 @@ const PlanComponent = () => {
         const plan = {planName, userId} // plan은 JSON 형태로 서버에 전달된다
         console.log(plan)
         
-        // id(planId)는 기본키로 plan을 고유하게 식별할 수 있는 값
-        if (id){ // 현재 URL에 params id가 있음 = Update 연산
-            const response = await updatePlanAPI(id, plan).catch(error => console.error(error))
+        // planIdFromParamsWhenUpdate(planId)는 기본키로 plan을 고유하게 식별할 수 있는 값
+        if (planIdFromParamsWhenUpdate){ // 현재 URL에 params id가 있음 = Update 연산
+            const response = await updatePlanAPI(planIdFromParamsWhenUpdate, plan).catch(error => console.error(error))
             console.log(response.data)
             navigator('/plans')
 
@@ -85,9 +103,9 @@ const PlanComponent = () => {
     }
 
     // params 유무에 따라 동적으로 title 변경
-    // add, update 버튼 누를 떄 모두 현재 component가 렌더링되지만  id 등 params 유무에 따라 title은 다르게 표시함
+    // add, update 버튼 누를 떄 모두 현재 component가 렌더링되지만  planIdFromParamsWhenUpdate 등 params 유무에 따라 title은 다르게 표시함
     function pageTitle(){
-        if (id){
+        if (planIdFromParamsWhenUpdate){
             return <h2 className='text-center'>Update Plan</h2>
         }
         else{

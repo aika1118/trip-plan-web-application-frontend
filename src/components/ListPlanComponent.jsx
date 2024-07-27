@@ -61,12 +61,21 @@ const ListPlanComponent = () => {
         setPlans(response.data)
     }
 
-    function updatePlan(id){
-        navigator(`/edit-plan/${id}`)
+    // function updatePlan(id){
+    //     navigator(`/edit-plan/${id}`)
+    // }
+
+    // 현재 user에 plan 추가
+    function addPlan(){
+        navigator('/edit-plan')
     }
 
-    async function deletePlan(id){ 
-        console.log(id);
+    function updatePlan(planId){
+        navigator(`/edit-plan/${planId}`)
+    }
+
+    async function deletePlan(planId){ 
+        console.log(planId);
 
         // 차후 bootstrap으로 더 깔끔한 삭제 확인창을 띄워보자
         const confirmed = window.confirm("Are you sure you want to delete this plan?");
@@ -74,16 +83,17 @@ const ListPlanComponent = () => {
             return
         
         // delete REST API 호출 발생
-        const response = await deletePlanAPI(id).catch(error => console.error(error))
+        const response = await deletePlanAPI(planId).catch(error => console.error(error))
 
         // delete 성공 후 페이지 구성을 위해 DB 정보를 다시 받아와서 state variable 갱신
-        getAllPlans();
+        getAllPlans(userId);
     }
+
 
     return (
         <div className='container'>
             <h2 className='text-center'>List of Plan</h2>
-            <button className='btn btn-primary mb-2' onClick={addNewPlans}>Add Plans</button>
+            <button className='btn btn-primary mb-2' onClick={() => addPlan()}>Add Plans</button>
             <table className='table table-bordered table-hover'>
                 <thead>
                     <tr>
@@ -98,7 +108,7 @@ const ListPlanComponent = () => {
                         plans.map(plan => // 모든 plan 순회
                             <tr key={plan.planId} >
                                 <td
-                                    onClick={() => navigator(`/daily-plans/${plan.planId}`)} // 클릭 시 해당하는 plan의 daily plan 경로로 이동
+                                    onClick={() => navigator(`/daily-plans/${plan.planId}`)} // 해당 plan의 daily Plan을 볼수 있는 component로 navigate
                                     style={{ cursor: 'pointer' }} 
                                 >{plan.planName}</td>
                                 <td>
