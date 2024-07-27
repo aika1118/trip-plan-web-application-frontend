@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { deletePlanAPI, getAllPlansAPI } from '../services/PlanService';
+import { getUserIdAPI } from '../services/UserService';
 
 /**
  * ListPlanComponent
@@ -21,16 +22,40 @@ const ListPlanComponent = () => {
     // 초기상태 = 빈 배열 ([])
     // plans에 plan 정보를 배열에 담을 것임 (JSON 객체 형식으로)
     const [plans, setPlans] = useState([])
+
+    // 테스트를 위해 임시로 로그인한 username 지정
+    // 차후 로그인 후 sessionStorage에서 username 가져오도록 수정
+    const USER_NAME_FOR_TEST = 'wskang'
+
+    // 내가 소유한 plan을 가져오기 위해 userId를 상태변수로 관리
+    const [userId, setUserId] = useState()
+
     const navigator = useNavigate(); // 다른 페이지로 이동시킬 때 사용
-    
-    // 컴포넌트가 렌더링된 이후에 실행
+
+    // 보안을 위해 매번 component 렌더링 될 때마다 username을 통해 서버에서 userId를 가져오도록 구현
+    // 이후 해당 userId에 속하는 plan을 가져오기
     useEffect(() => {
-        getAllPlans();
-    }, []) // 빈 배열: 이 이펙트는 컴포넌트가 렌더링 될 때마다 실행됨
+        getUserId(USER_NAME_FOR_TEST)
+    }, [])
+
+    useEffect(() => {   
+        if (!userId) // userId가 아직 set 되지 않았을 경우 (DB상 userID는 1 이상 값을 가짐)
+            return
+
+        getAllPlans(userId)
+    }, [userId]) // userId에 변경이 일어날 때 실행
+    
+
+    // username을 통해 userId 가져오기 (using REST API)
+    async function getUserId(USER_NAME_FOR_TEST){
+        const response = await getUserIdAPI(USER_NAME_FOR_TEST).catch(error => console.error(error))
+        setUserId(response.data)
+    }
+
 
     // 모든 Plan 정보를 서버에서 받아와서 state variable에 set
-    async function getAllPlans(){
-        const response = await getAllPlansAPI().catch(error => console.error(error)) 
+    async function getAllPlans(userId){
+        const response = await getAllPlansAPI(userId).catch(error => console.error(error)) 
 
         // 정상적으로 response 받으면 reponse.data로 state 갱신
         setPlans(response.data)

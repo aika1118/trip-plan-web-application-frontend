@@ -11,7 +11,7 @@ import axios from "axios"
 const BASE_REST_API_URL = 'http://localhost:8080/api/plans';
 
 
-export const getAllPlansAPI = () => axios.get(BASE_REST_API_URL);
+export const getAllPlansAPI = (username) => axios.get(BASE_REST_API_URL + '/user/' + username);
 
 export const getPlanAPI = (id) => axios.get(BASE_REST_API_URL + '/' + id)
 

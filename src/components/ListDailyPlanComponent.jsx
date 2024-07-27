@@ -7,9 +7,9 @@ import { getPlanAPI } from '../services/PlanService';
  * ListDailyPlanComponent
  * 
  * 모든 DailyPlan을 테이블 형태로 보여주는 component 입니다.
- * Plan 클릭 시 해당하는 Plan에 속하는 DailyPlan만 모두 보여줍니다.
- * update 버튼을 눌러서 Plan을 update 할 수 있습니다.
- * delete 버튼을 눌러서 Plan을 delete 할 수 있습니다.
+ * ListPlanComponent에서 Plan이 클릭되면 해당 Plan에 속하는 DailyPlan만 모두 보여줍니다.
+ * update 버튼을 눌러서 Daily Plan을 update 할 수 있습니다.
+ * delete 버튼을 눌러서 Daily Plan을 delete 할 수 있습니다.
  */
 
 const ListDailyPlanComponent = () => {

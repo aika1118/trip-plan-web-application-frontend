@@ -5,10 +5,13 @@ import { createDailyPlanAPI, getDailyPlanAPI, updateDailyPlanAPI } from '../serv
 /**
  * DailyPlanComponent
  * 
- * Daily Plan을 Create 또는 Update 할 수 있는 Component 입니다.
- * URL 파라미터가 {dailyIdFromParamsWhenUpdate}이면 Update를 진행합니다. (http://localhost:3000/daily-plan/update/{dailyIdFromParamsWhenUpdate})
+ * Daily Plan을 Add 또는 Update 할 수 있는 Component 입니다.
+ * Add, Update는 같은 component를 쓰고 있으며 URL 파라미터 Key 값을 통해 구분합니다.
+ * 
+ * URL 파라미터의 key 값이 “dailyIdFromParamsWhenUpdate” 이면 Update를 진행합니다. (http://localhost:3000/daily-plan/update/{dailyIdFromParamsWhenUpdate})
  * Update 연산은 특정 daily plan에 대해 진행하기 때문에 URL 파라미터로 dailyId를 전달합니다.
- * URL 파라미터가 {dailyIdFromParamsWhenAdd}이면 Add를 진행합니다. (http://localhost:3000/daily-plan/add/{planIdFromParamsWhenAdd})
+ * 
+ * URL 파라미터의 key 값이  “planIdFromParamsWhenAdd” 이면 Add를 진행합니다. (http://localhost:3000/daily-plan/add/{planIdFromParamsWhenAdd})
  * Add 연산은 특정 plan에 대해 진행하기 때문에 URL 파라미터로 planId를 전달합니다.
  */
 
@@ -33,7 +36,7 @@ const DailyPlanComponent = () => {
         if (!params)
             return
 
-        if (params.dailyIdFromParamsWhenUpdate) // update 일 때
+        if (params.dailyIdFromParamsWhenUpdate) // update 일 때 (params key 값으로 판단)
         {
             setDailyPlanState(params.dailyIdFromParamsWhenUpdate)    
             return
