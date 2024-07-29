@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { deletePlanAPI, getAllPlansAPI } from '../services/PlanService';
 import { getUserIdAPI } from '../services/UserService';
-import { getLoggedInUsername, logout } from '../services/AuthService';
+import { getLoggedInUser, logout } from '../services/AuthService';
 
 /**
  * ListPlanComponent
@@ -24,8 +24,9 @@ const ListPlanComponent = () => {
     // plans에 plan 정보를 배열에 담을 것임 (JSON 객체 형식으로)
     const [plans, setPlans] = useState([])
 
-    // sessionStorage에서 현재 로그인한 유저의 username 가져옴
-    const username = getLoggedInUsername()
+    // sessionStorage에서 현재 로그인한 유저 가져오기
+    // user : 로그인 유저의 username 또는 email이 저장되어 있음 (로그인 당시 입력한 ID)
+    const user = getLoggedInUser()
 
     // 내가 소유한 plan을 가져오기 위해 userId를 상태변수로 관리
     const [userId, setUserId] = useState()
@@ -35,11 +36,11 @@ const ListPlanComponent = () => {
     // 보안을 위해 매번 component 렌더링 될 때마다 username을 통해 서버에서 userId를 가져오도록 구현
     // 이후 해당 userId에 속하는 plan을 가져오기
     useEffect(() => {
-        if (!username){ // 인증 정보가 없어 username을 sessionStorage에서 가져오지 못한 경우 로그아웃 처리 후 LoginComponent로 이동
+        if (!user){ // 인증 정보가 없어 username을 sessionStorage에서 가져오지 못한 경우 로그아웃 처리 후 LoginComponent로 이동
             logout()
             navigator('/login')
         }
-        getUserId(username)
+        getUserId(user)
     }, [])
 
     useEffect(() => {   
@@ -51,8 +52,8 @@ const ListPlanComponent = () => {
     
 
     // username을 통해 userId 가져오기 (using REST API)
-    async function getUserId(username){
-        const response = await getUserIdAPI(username).catch(error => console.error(error))
+    async function getUserId(user){
+        const response = await getUserIdAPI(user).catch(error => console.error(error))
         setUserId(response.data)
     }
 
