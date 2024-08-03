@@ -111,7 +111,7 @@ const SubPlanComponent = () => {
             return <h2 className='text-center'>Update Sub Plan</h2>
         }
         else{ // add 인 경우
-            return <h2 className='text-center'>Add Daily Plan</h2>
+            return <h2 className='text-center'>Add Sub Plan</h2>
         }
     }
 
@@ -184,7 +184,7 @@ const SubPlanComponent = () => {
                                     className="form-control"
                                     onChange={(e) => setType(e.target.value)}
                                 >
-                                    <option value="" className="hidden-option">Select Option ▼</option>
+                                    <option value={type} className="hidden-option">{type ? type : "Select Option ▼"}</option>
                                     {
                                         typeOptions.map(typeOption => 
                                             <option key={typeOption} value={typeOption}>{typeOption}</option>
