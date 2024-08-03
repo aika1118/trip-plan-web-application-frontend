@@ -9,6 +9,8 @@ import DailyPlanComponent from './components/DailyPlanComponent'
 import RegisterComponent from './components/RegisterComponent'
 import LoginComponent from './components/LoginComponent'
 import { isUserLoggedIn } from './services/AuthService'
+import ListSubPlanComponent from './components/ListSubPlanComponent'
+import SubPlanComponent from './components/SubPlanComponent'
 
 function App() {
 
@@ -58,13 +60,13 @@ function App() {
                           <ListDailyPlanComponent/>
                       </AuthenticatedRoute>
                   }></Route>
-                  {/* http://localhost:3000/daily-plan/add/{planIdFromParamsWhenAdd} */}
+                  {/* http://localhost:3000/daily-plans/add/{planIdFromParamsWhenAdd} */}
                   <Route path='/daily-plans/add/:planIdFromParamsWhenAdd' element = {
                       <AuthenticatedRoute>
                           <DailyPlanComponent/>
                       </AuthenticatedRoute>
                   }></Route>
-                  {/* http://localhost:3000/daily-plan/update/{dailyIdFromParamsWhenUpdate} */}
+                  {/* http://localhost:3000/daily-plans/update/{dailyIdFromParamsWhenUpdate} */}
                   <Route path='/daily-plans/update/:dailyIdFromParamsWhenUpdate' element = {
                       <AuthenticatedRoute>
                           <DailyPlanComponent/>
@@ -75,6 +77,25 @@ function App() {
                   <Route path='/register' element = {<RegisterComponent/>}></Route>
                   {/* http://localhost:8080/login */}
                   <Route path='/login' element = {<LoginComponent/>}></Route>
+
+                  {/* http://localhost:3000/sub-plans/{dailyIdFromParams} */}
+                  <Route path='/sub-plans/:dailyIdFromParams' element = {
+                      <AuthenticatedRoute>
+                          <ListSubPlanComponent/>
+                      </AuthenticatedRoute>
+                  }></Route>
+                  {/* http://localhost:3000/sub-plans/add/{dailyIdFromParamsWhenAdd} */}
+                  <Route path='/sub-plans/add/:dailyIdFromParamsWhenAdd' element = {
+                      <AuthenticatedRoute>
+                          <SubPlanComponent/>
+                      </AuthenticatedRoute>
+                  }></Route>
+                  {/* http://localhost:3000/sub-plans/update/{subIdFromParamsWhenUpdate} */}
+                  <Route path='/sub-plans/update/:subIdFromParamsWhenUpdate' element = {
+                      <AuthenticatedRoute>
+                          <SubPlanComponent/>
+                      </AuthenticatedRoute>
+                  }></Route>
                   
               </Routes>
             <FooterComponent/>

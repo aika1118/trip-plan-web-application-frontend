@@ -100,7 +100,7 @@ const ListPlanComponent = () => {
             <h2 className='text-center'>List of Plan</h2>
             <button className='btn btn-primary mb-2' onClick={() => addPlan()}>Add Plans</button>
             <table className='table table-bordered table-hover'>
-                <thead>
+                <thead className='text-center'>
                     <tr>
                         <th style={{width: '80%'}}>Plan Name</th>
                         <th style={{width: '10%'}}>Update</th>
@@ -108,7 +108,7 @@ const ListPlanComponent = () => {
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody className='text-center'>
                     {
                         plans.map(plan => // 모든 plan 순회
                             <tr key={plan.planId} >
