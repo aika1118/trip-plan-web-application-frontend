@@ -26,79 +26,79 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+        <BrowserRouter>
             <HeaderComponent/>
-              <Routes>
-                  {/* http://localhost:3000/ */}
-                  <Route path='/' element = {
-                      <AuthenticatedRoute>
-                          <ListPlanComponent/> {/* AuthenticatedRoute의 children */}
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/plans */}
-                  <Route path='/plans' element = {
-                      <AuthenticatedRoute>
-                          <ListPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/edit-plan */}
-                  <Route path='/edit-plan' element = {
-                      <AuthenticatedRoute>
-                          <PlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/edit-plan/{planIdFromParamsWhenUpdate} */}
-                  <Route path='/edit-plan/:planIdFromParamsWhenUpdate' element = {
-                      <AuthenticatedRoute>
-                          <PlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
+                <Routes>
+                    {/* http://localhost:3000/ */}
+                    <Route path='/' element = {
+                        <AuthenticatedRoute>
+                            <ListPlanComponent/> {/* AuthenticatedRoute의 children */}
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/plans */}
+                    <Route path='/plans' element = {
+                        <AuthenticatedRoute>
+                            <ListPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/edit-plan */}
+                    <Route path='/edit-plan' element = {
+                        <AuthenticatedRoute>
+                            <PlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/edit-plan/{planIdFromParamsWhenUpdate} */}
+                    <Route path='/edit-plan/:planIdFromParamsWhenUpdate' element = {
+                        <AuthenticatedRoute>
+                            <PlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
 
-                  {/* http://localhost:3000/daily-plans/{planIdFromParams} */}
-                  <Route path='/daily-plans/:planIdFromParams' element = {
-                      <AuthenticatedRoute>
-                          <ListDailyPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/daily-plans/add/{planIdFromParamsWhenAdd} */}
-                  <Route path='/daily-plans/add/:planIdFromParamsWhenAdd' element = {
-                      <AuthenticatedRoute>
-                          <DailyPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/daily-plans/update/{dailyIdFromParamsWhenUpdate} */}
-                  <Route path='/daily-plans/update/:dailyIdFromParamsWhenUpdate' element = {
-                      <AuthenticatedRoute>
-                          <DailyPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
+                    {/* http://localhost:3000/daily-plans/{planIdFromParams} */}
+                    <Route path='/daily-plans/:planIdFromParams' element = {
+                        <AuthenticatedRoute>
+                            <ListDailyPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/daily-plans/add/{planIdFromParamsWhenAdd} */}
+                    <Route path='/daily-plans/add/:planIdFromParamsWhenAdd' element = {
+                        <AuthenticatedRoute>
+                            <DailyPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/daily-plans/update/{dailyIdFromParamsWhenUpdate} */}
+                    <Route path='/daily-plans/update/:dailyIdFromParamsWhenUpdate' element = {
+                        <AuthenticatedRoute>
+                            <DailyPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
 
-                  {/* http://localhost:8080/register */}
-                  <Route path='/register' element = {<RegisterComponent/>}></Route>
-                  {/* http://localhost:8080/login */}
-                  <Route path='/login' element = {<LoginComponent/>}></Route>
+                    {/* http://localhost:8080/register */}
+                    <Route path='/register' element = {<RegisterComponent/>}></Route>
+                    {/* http://localhost:8080/login */}
+                    <Route path='/login' element = {<LoginComponent/>}></Route>
 
-                  {/* http://localhost:3000/sub-plans/{dailyIdFromParams} */}
-                  <Route path='/sub-plans/:dailyIdFromParams' element = {
-                      <AuthenticatedRoute>
-                          <ListSubPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/sub-plans/add/{dailyIdFromParamsWhenAdd} */}
-                  <Route path='/sub-plans/add/:dailyIdFromParamsWhenAdd' element = {
-                      <AuthenticatedRoute>
-                          <SubPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  {/* http://localhost:3000/sub-plans/update/{subIdFromParamsWhenUpdate} */}
-                  <Route path='/sub-plans/update/:subIdFromParamsWhenUpdate' element = {
-                      <AuthenticatedRoute>
-                          <SubPlanComponent/>
-                      </AuthenticatedRoute>
-                  }></Route>
-                  
-              </Routes>
-            <FooterComponent/>
+                    {/* http://localhost:3000/sub-plans/{dailyIdFromParams} */}
+                    <Route path='/sub-plans/:dailyIdFromParams' element = {
+                        <AuthenticatedRoute>
+                            <ListSubPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/sub-plans/add/{dailyIdFromParamsWhenAdd} */}
+                    <Route path='/sub-plans/add/:dailyIdFromParamsWhenAdd' element = {
+                        <AuthenticatedRoute>
+                            <SubPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    {/* http://localhost:3000/sub-plans/update/{subIdFromParamsWhenUpdate} */}
+                    <Route path='/sub-plans/update/:subIdFromParamsWhenUpdate' element = {
+                        <AuthenticatedRoute>
+                            <SubPlanComponent/>
+                        </AuthenticatedRoute>
+                    }></Route>
+                    
+                </Routes>
+            {/* <FooterComponent/> */}
         </BrowserRouter>
     </>
   )

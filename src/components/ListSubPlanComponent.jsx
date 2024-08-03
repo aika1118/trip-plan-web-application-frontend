@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteSubPlanAPI, getAllSubPlansAPI } from '../services/SubPlanService';
 import { getDailyPlanAPI } from '../services/DailyPlanService';
+import { currencyOptions } from '../Options/CurrencyOption';
 
 /**
  * ListSubPlanComponent
@@ -25,13 +26,6 @@ const ListSubPlanComponent = () => {
 
     const {dailyIdFromParams} = useParams(); //  현재 URL 경로의 매개변수(params)에 접근
     const navigator = useNavigate(); // 다른 페이지로 이동시킬 때 사용
-
-    const currencies = {
-        '한국': '₩',
-        '일본': '¥',
-        '미국': '$',
-        '중국': '¥'
-    }
 
     // 특정 dailyPlan id가 URL에 전달되면서 현재 component가 호출됐을 때 실행
     useEffect(() => { 
@@ -62,6 +56,7 @@ const ListSubPlanComponent = () => {
     // 모든 Sub Plan 정보를 서버에서 받아와서 state variable에 set
     async function getAllSubPlans(dailyId){
         const response = await getAllSubPlansAPI(dailyId).catch(error => console.error(error)) 
+        console.log(response.data)
 
         // 정상적으로 response 받으면 reponse.data로 state 갱신
         setSubPlans(response.data)
@@ -91,18 +86,26 @@ const ListSubPlanComponent = () => {
         getAllSubPlans(dailyId);
     }
 
-    const formatTime = (timestamp) => {
-        const date = new Date(timestamp);
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${hours}:${minutes}`;
+    const formatTime = (timeStr) => {
+
+        if (!timeStr)
+            return ''
+
+        // 문자열을 ':'로 분리
+        const parts = timeStr.split(':');
+
+        // 'HH'와 'MM' 부분만 결합하여 반환
+        return parts.length >= 2 ? `${parts[0]}:${parts[1]}` : 'Invalid Time'
     };
 
     const formatMoney = (money, currency) => {
-        if (!currencies[currency])
-            return 'undefined currency'
+        if (!money)
+            return ''
 
-        return `${money}${currencies[currency]}`;
+        if (!currencyOptions[currency])
+            return 'Invalid currency'
+
+        return `${currencyOptions[currency]}${money.toLocaleString()}`; // {통화} + {3자리마다 쉼표 찍어서 money 출력}
     };
 
     return (
