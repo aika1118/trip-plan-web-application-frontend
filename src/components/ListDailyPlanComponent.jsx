@@ -104,8 +104,8 @@ const ListDailyPlanComponent = () => {
                         dailyPlans.map(dailyPlan => // 모든 plan 순회
                             <tr key={dailyPlan.dailyId} >
                                 <td
-                                    // onClick={() => navigator('/daily-plan')}
-                                    // style={{ cursor: 'pointer' }} 
+                                    onClick={() => navigator(`/sub-plans/${dailyPlan.dailyId}`)} // 해당 daily plan의 sub Plan을 볼수 있는 component로 navigate
+                                    style={{ cursor: 'pointer' }} 
                                 >{dailyPlan.dailyName}</td>
                                 <td>
                                     {/* 매개변수가 있기 때문에 화살표 함수 사용 */}
