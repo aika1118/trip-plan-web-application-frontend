@@ -94,13 +94,12 @@ const PlanComponent = () => {
 
         const errorsCopy = {... errors} // "..." 복사 연산
 
-        if (planName.trim()){
-            errorsCopy.planName = '';
-        }
-        else{
-            errorsCopy.planName = 'Plan name is required';
-            valid = false;
-        }
+        // planName : 비워져있으면 안됨
+
+        errorsCopy.planName = planName.trim() ? '' : 'planName is required';
+
+        // 하나라도 유효성 검사에 어긋나 error 메세지가 기록된 경우 valid = false 처리
+        valid = errorsCopy.planName ? false : true; 
 
         setErrors(errorsCopy);
 

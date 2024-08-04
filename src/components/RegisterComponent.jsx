@@ -25,13 +25,12 @@ const RegisterComponent = () => {
 
         // username : 비워져 있거나 '@'가 들어가 있으면 안됨
         // email : '@'가 반드시 포함되어야함
+        // password : 비워져있으면 안됨
 
         errorsCopy.username = username.trim() ? '' : 'Username is required';
         errorsCopy.username = username.includes('@') ? 'Username cannot contain a "@"' : errorsCopy.username;   
         errorsCopy.email = email.includes('@') ? '' : 'Email should contain a "@"';
         errorsCopy.password = password.trim() ? '' : 'Password is required';
-
-        
 
         // 하나라도 유효성 검사에 어긋나 error 메세지가 기록된 경우 valid = false 처리
         valid = errorsCopy.username || 
