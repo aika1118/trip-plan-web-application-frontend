@@ -23,12 +23,15 @@ const RegisterComponent = () => {
 
         const errorsCopy = {... errors} // "..." 복사 연산
 
+        // username : 비워져 있거나 '@'가 들어가 있으면 안됨
+        // email : '@'가 반드시 포함되어야함
+
         errorsCopy.username = username.trim() ? '' : 'Username is required';
-        errorsCopy.email = email.trim() ? '' : 'Email is required';
+        errorsCopy.username = username.includes('@') ? 'Username cannot contain a "@"' : errorsCopy.username;   
+        errorsCopy.email = email.includes('@') ? '' : 'Email should contain a "@"';
         errorsCopy.password = password.trim() ? '' : 'Password is required';
 
-        errorsCopy.username = username.includes('@') ? 'Username cannot contain a "@"' : errorsCopy.username;
-        errorsCopy.email = email.includes('@') ? errorsCopy.email : 'Email should contain a "@"';
+        
 
         // 하나라도 유효성 검사에 어긋나 error 메세지가 기록된 경우 valid = false 처리
         valid = errorsCopy.username || 
@@ -45,6 +48,8 @@ const RegisterComponent = () => {
 
         if (!validateForm()) // 입력된 input값이 유효하지 않을 때 바로 return 처리
             return;
+
+        return
 
         const register = {username, email, password}
 
