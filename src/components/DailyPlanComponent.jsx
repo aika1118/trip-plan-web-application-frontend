@@ -61,13 +61,12 @@ const DailyPlanComponent = () => {
 
         const errorsCopy = {... errors} // "..." 복사 연산
 
-        if (dailyName.trim()){
-            errorsCopy.dailyName = '';
-        }
-        else{
-            errorsCopy.dailyName = 'Daily Plan name is required';
-            valid = false;
-        }
+        // dailyName : 비워져있으면 안됨
+
+        errorsCopy.dailyName = dailyName.trim() ? '' : 'dailyName is required';
+
+        // 하나라도 유효성 검사에 어긋나 error 메세지가 기록된 경우 valid = false 처리
+        valid = errorsCopy.dailyName ? false : true; 
 
         setErrors(errorsCopy);
 
