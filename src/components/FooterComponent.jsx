@@ -9,7 +9,7 @@ import React from 'react'
 const FooterComponent = () => {
   return (
     <div>
-        <footer className='footer'>
+        <footer className='footer mt-auto'>
             <span>All rights reserved 2024 by wskang</span>
         </footer>
     </div>
