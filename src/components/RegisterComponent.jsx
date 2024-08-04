@@ -10,8 +10,41 @@ const RegisterComponent = () => {
 
     const navigator = useNavigate();
 
+    // 입력값 유효성 검사에 사용
+    const [errors, setErrors] = useState({
+        username: '',
+        email: '',
+        password: '',
+    })
+
+    // form 데이터의 유효성 검사
+    function validateForm(){
+        let valid = true;
+
+        const errorsCopy = {... errors} // "..." 복사 연산
+
+        errorsCopy.username = username.trim() ? '' : 'Username is required';
+        errorsCopy.email = email.trim() ? '' : 'Email is required';
+        errorsCopy.password = password.trim() ? '' : 'Password is required';
+
+        errorsCopy.username = username.includes('@') ? 'Username cannot contain a "@"' : errorsCopy.username;
+        errorsCopy.email = email.includes('@') ? errorsCopy.email : 'Email should contain a "@"';
+
+        // 하나라도 유효성 검사에 어긋나 error 메세지가 기록된 경우 valid = false 처리
+        valid = errorsCopy.username || 
+                errorsCopy.email ||
+                errorsCopy.password ? false : true; 
+
+        setErrors(errorsCopy);
+
+        return valid;
+    }
+
     async function handleRegistrationForm(e){
         e.preventDefault()
+
+        if (!validateForm()) // 입력된 input값이 유효하지 않을 때 바로 return 처리
+            return;
 
         const register = {username, email, password}
 
@@ -42,12 +75,13 @@ const RegisterComponent = () => {
                                         <input
                                             type='text'
                                             name='username'
-                                            className='form-control'
+                                            className={`form-control ${errors.username ? 'is-invalid': ''}`} // 유효성 검사
                                             placeholder='Enter username'
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)} //input box에 text 입력할 때마다 state variable에 text 저장
                                         >
                                         </input>
+                                        {errors.username && <div className='invalid-feedback'>{errors.username}</div>} {/*error 문구가 저장된 경우 실행*/}
                                     </div>
                                 </div>
 
@@ -57,12 +91,13 @@ const RegisterComponent = () => {
                                         <input
                                             type='text'
                                             name='email'
-                                            className='form-control'
+                                            className={`form-control ${errors.email ? 'is-invalid': ''}`} // 유효성 검사
                                             placeholder='Enter email address'
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)} //input box에 text 입력할 때마다 state variable에 text 저장
                                         >
                                         </input>
+                                        {errors.email && <div className='invalid-feedback'>{errors.email}</div>} {/*error 문구가 저장된 경우 실행*/}
                                     </div>
                                 </div>
 
@@ -72,12 +107,13 @@ const RegisterComponent = () => {
                                         <input
                                             type='password'
                                             name='password'
-                                            className='form-control'
+                                            className={`form-control ${errors.password ? 'is-invalid': ''}`} // 유효성 검사
                                             placeholder='Enter password'
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)} //input box에 text 입력할 때마다 state variable에 text 저장
                                         >
                                         </input>
+                                        {errors.password && <div className='invalid-feedback'>{errors.password}</div>} {/*error 문구가 저장된 경우 실행*/}
                                     </div>
                                 </div>
 
