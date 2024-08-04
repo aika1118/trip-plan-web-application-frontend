@@ -24,6 +24,9 @@ const ListSubPlanComponent = () => {
     // 현재 보고있는 dailyPlan 이름 저장
     const [dailyName, setDailyName] = useState()
 
+    // 현재 속하고 있는 planId 저장
+    const [planId, setPlanId] = useState()
+
     const {dailyIdFromParams} = useParams(); //  현재 URL 경로의 매개변수(params)에 접근
     const navigator = useNavigate(); // 다른 페이지로 이동시킬 때 사용
 
@@ -51,6 +54,7 @@ const ListSubPlanComponent = () => {
 
         // 상태 변수에 현재 daily plan 이름을 set
         setDailyName(response.data.dailyName)
+        setPlanId(response.data.planId)
     }
 
     // 모든 Sub Plan 정보를 서버에서 받아와서 state variable에 set
@@ -111,7 +115,8 @@ const ListSubPlanComponent = () => {
     return (
         <div className='container'>
             <h2 className='text-center'>{dailyName}</h2>
-            <button className='btn btn-primary mb-2' onClick={() => addSubPlan(dailyId)}>Add Sub Plans</button>
+            <button className='btn btn-primary mb-2 me-1' onClick={() => addSubPlan(dailyId)}>Add Sub Plans</button>
+            <button className='btn btn-secondary mb-2' onClick={() => navigator(`/daily-plans/${planId}`)}>Back</button>
             <table className='table table-bordered table-hover'>
                 <thead className='text-center'>
                     <tr>

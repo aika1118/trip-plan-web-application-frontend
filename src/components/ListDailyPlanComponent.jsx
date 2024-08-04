@@ -89,7 +89,8 @@ const ListDailyPlanComponent = () => {
     return (
         <div className='container'>
             <h2 className='text-center'>{planName}</h2>
-            <button className='btn btn-primary mb-2' onClick={() => addDailyPlan(planId)}>Add Daily Plans</button>
+            <button className='btn btn-primary mb-2 me-1' onClick={() => addDailyPlan(planId)}>Add Daily Plans</button>
+            <button className='btn btn-secondary mb-2' onClick={() => navigator('/plans')}>Back</button>
             <table className='table table-bordered table-hover'>
                 <thead className='text-center'>
                     <tr>
