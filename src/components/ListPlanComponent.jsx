@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { deletePlanAPI, getAllPlansAPI } from '../services/PlanService';
 import { getUserIdAPI } from '../services/UserService';
 import { getLoggedInUser, logout } from '../services/AuthService';
+import { handlingError } from '../Exception/HandlingError'
+import { noDataMessage } from './Message/NoDataMessage';
 
 /**
  * ListPlanComponent
@@ -53,17 +55,18 @@ const ListPlanComponent = () => {
 
     // username을 통해 userId 가져오기 (using REST API)
     async function getUserId(user){
-        const response = await getUserIdAPI(user).catch(error => console.error(error))
+        const response = await getUserIdAPI(user).catch(error => handlingError(error, navigator))
         setUserId(response.data)
     }
 
 
     // 모든 Plan 정보를 서버에서 받아와서 state variable에 set
     async function getAllPlans(userId){
-        const response = await getAllPlansAPI(userId).catch(error => console.error(error)) 
+        const response = await getAllPlansAPI(userId).catch(error => handlingError(error, navigator))  
+        noDataMessage(response.data.length) // 데이터 없는 경우 없다고 사용자에게 message 출력
 
         // 정상적으로 response 받으면 reponse.data로 state 갱신
-        setPlans(response.data)
+        setPlans(response.data) 
     }
 
     // function updatePlan(id){
@@ -88,7 +91,7 @@ const ListPlanComponent = () => {
             return
         
         // delete REST API 호출 발생
-        const response = await deletePlanAPI(planId).catch(error => console.error(error))
+        const response = await deletePlanAPI(planId).catch(error => handlingError(error, navigator))
 
         // delete 성공 후 페이지 구성을 위해 DB 정보를 다시 받아와서 state variable 갱신
         getAllPlans(userId);

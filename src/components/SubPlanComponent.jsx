@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { createDailyPlanAPI, getDailyPlanAPI, updateDailyPlanAPI } from '../services/DailyPlanService';
 import { createSubPlanAPI, getSubPlanAPI, updateSubPlanAPI } from '../services/SubPlanService';
 import { typeOptions } from '../Options/TypeOption';
 import { currencyOptions } from '../Options/CurrencyOption';
-import { DateTime } from 'luxon';
+import { handlingError } from '../Exception/HandlingError'
 
 /**
  * SubPlanComponent
@@ -71,7 +70,7 @@ const SubPlanComponent = () => {
 
     // dailyId를 통해 daily plan 정보 GET 후 daily Name, plan Id를 상태변수에 저장
     async function setSubPlanState(subIdFromParams){
-        const response = await getSubPlanAPI(subIdFromParams).catch(error => console.error(error))
+        const response = await getSubPlanAPI(subIdFromParams).catch(error => handlingError(error, navigator))
         console.log(response)
         
         setType(response.data.type)
@@ -141,7 +140,7 @@ const SubPlanComponent = () => {
         console.log(subPlan)
         
         if (params.subIdFromParamsWhenUpdate){ // Update 연산
-            const response = await updateSubPlanAPI(params.subIdFromParamsWhenUpdate, subPlan).catch(error => console.error(error))
+            const response = await updateSubPlanAPI(params.subIdFromParamsWhenUpdate, subPlan).catch(error => handlingError(error, navigator))
             console.log(response.data)
             navigator(`/sub-plans/${response.data.dailyId}`) // sub plan component로 돌아가기
 
@@ -149,7 +148,7 @@ const SubPlanComponent = () => {
         }
 
         // Add 연산
-        const response = await createSubPlanAPI(subPlan).catch(error => console.error(error))
+        const response = await createSubPlanAPI(subPlan).catch(error => handlingError(error, navigator))
         console.log(response.data);
         navigator(`/sub-plans/${response.data.dailyId}`) // sub plan component로 돌아가기
     }

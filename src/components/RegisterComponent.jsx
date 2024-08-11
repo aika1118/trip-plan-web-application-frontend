@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { registerAPICall } from '../services/AuthService'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { handlingError } from '../Exception/HandlingError'
 
 const RegisterComponent = () => {
 
@@ -48,14 +50,15 @@ const RegisterComponent = () => {
         if (!validateForm()) // 입력된 input값이 유효하지 않을 때 바로 return 처리
             return;
 
-        return
-
         const register = {username, email, password}
 
         console.log(register)
 
-        const response = await registerAPICall(register).catch(error => console.error(error))
+        const response = await registerAPICall(register).catch(error => handlingError(error, navigator))
+
         console.log(response.data)
+
+        toast.success('회원가입 성공')
 
         navigator('/login')
     }

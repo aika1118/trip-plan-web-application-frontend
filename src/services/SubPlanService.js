@@ -1,5 +1,7 @@
 import axios from "axios"
 import { getToken } from "./AuthService";
+import { loadingMessage } from "../components/Message/LoadingMessage";
+import { completeMessage } from "../components/Message/CompleteMessage";
 
 /**
  * SubPlanService
@@ -22,16 +24,46 @@ axios.interceptors.request.use(function (config) {
 const BASE_REST_API_URL = 'http://localhost:8080/api/sub-plans';
 
 
-export const getAllSubPlansAPI = (dailyId) => axios.get(BASE_REST_API_URL + '/daily-plan/' + dailyId);
+export const getAllSubPlansAPI = async (dailyId) => {
+    const toastId = loadingMessage('데이터 가져오는 중...')
+    const response = await axios.get(BASE_REST_API_URL + '/daily-plan/' + dailyId)
+    completeMessage(toastId, '데이터 가져오기 완료')
 
-export const getSubPlanAPI = (subId) => axios.get(BASE_REST_API_URL + '/' + subId)
+    return response
+}
 
-export const createSubPlanAPI = (subPlan) => axios.post(BASE_REST_API_URL, subPlan)
+export const getSubPlanAPI = async (subId) => {
+    const toastId = loadingMessage('데이터 가져오는 중...')
+    const response = await axios.get(BASE_REST_API_URL + '/' + subId)
+    completeMessage(toastId, '데이터 가져오기 완료')
 
-export const updateSubPlanAPI = (subId, subPlan) => axios.put(BASE_REST_API_URL + '/' + subId, subPlan)
+    return response
+}
 
-export const deleteSubPlanAPI = (subId) => axios.delete(BASE_REST_API_URL + '/' + subId)
+export const createSubPlanAPI = async (subPlan) => {
+    const toastId = loadingMessage('데이터 추가중...')
+    const response = await axios.post(BASE_REST_API_URL, subPlan)
+    completeMessage(toastId, '데이터 추가 완료')
 
-export const completeSubPlanAPI = (subId) => axios.patch(BASE_REST_API_URL + '/' + subId + '/complete')
+    return response
+}
 
-export const inCompleteSubPlanAPI = (subId) => axios.patch(BASE_REST_API_URL + '/' + subId + '/in-complete')
+export const updateSubPlanAPI = async (subId, subPlan) => {
+    const toastId = loadingMessage('데이터 업데이트 중...')
+    const response = await axios.put(BASE_REST_API_URL + '/' + subId, subPlan)
+    completeMessage(toastId, '데이터 업데이트 완료')
+
+    return response
+}
+
+export const deleteSubPlanAPI = async (subId) => {
+    const toastId = loadingMessage('데이터 삭제중...')
+    const response = await axios.delete(BASE_REST_API_URL + '/' + subId)
+    completeMessage(toastId, '데이터 삭제 완료')
+
+    return response
+}
+
+//export const completeSubPlanAPI = (subId) => axios.patch(BASE_REST_API_URL + '/' + subId + '/complete')
+
+//export const inCompleteSubPlanAPI = (subId) => axios.patch(BASE_REST_API_URL + '/' + subId + '/in-complete')

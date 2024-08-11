@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { loginAPICall, saveLoggedInUser, storeToken } from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
+import { handlingError } from '../Exception/HandlingError'
 
 const LoginComponent = () => {
 
@@ -16,7 +17,7 @@ const LoginComponent = () => {
         // async/await 사용을 코드가 더 간결해짐 (더 권장하는 방식)
         // 비동기 함수지만 마치 동기적으로 동작하는 느낌 (코드 이해가 더 쉬움)
         // await 동작을 기다린 후 이후 로직이 실행됨
-        const response = await loginAPICall(usernameOrEmail, password).catch(error => console.error(error)) // {console.error(error)} 와 기능적 차이 X
+        const response = await loginAPICall(usernameOrEmail, password).catch(error => handlingError(error, navigator)) // {console.error(error)} 와 기능적 차이 X
         console.log(response.data);
 
         // JWT 토큰 -> HTTP Authorization Header에 포함 (Authorization : bearer type)

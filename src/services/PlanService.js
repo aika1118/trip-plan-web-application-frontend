@@ -1,5 +1,8 @@
 import axios from "axios"
 import { getToken } from "./AuthService";
+import { toast } from "react-toastify";
+import { loadingMessage } from "../components/Message/LoadingMessage";
+import { completeMessage } from "../components/Message/CompleteMessage";
 
 /**
  * PlanService
@@ -24,12 +27,44 @@ axios.interceptors.request.use(function (config) {
 const BASE_REST_API_URL = 'http://localhost:8080/api/plans';
 
 
-export const getAllPlansAPI = (username) => axios.get(BASE_REST_API_URL + '/user/' + username);
+export const getAllPlansAPI = async (username) => {
+    const toastId = loadingMessage('데이터 가져오는 중...')
+    const response = await axios.get(BASE_REST_API_URL + '/user/' + username) // axios는 비동기 작업, 흐름제어를 위해 await 사용
+    completeMessage(toastId, '데이터 가져오기 완료')
 
-export const getPlanAPI = (id) => axios.get(BASE_REST_API_URL + '/' + id)
+    return response
+}
 
-export const createPlanAPI = (plan) => axios.post(BASE_REST_API_URL, plan)
+export const getPlanAPI = async (id, isShowing = true) => { // isShowing : 메세지 출력 여부 (기본값 : true)
+    if (!isShowing) return axios.get(BASE_REST_API_URL + '/' + id)
 
-export const updatePlanAPI = (id, plan) => axios.put(BASE_REST_API_URL + '/' + id, plan)
+    const toastId = loadingMessage('데이터 가져오는 중...')
+    const response = await axios.get(BASE_REST_API_URL + '/' + id)
+    completeMessage(toastId, '데이터 가져오기 완료')
 
-export const deletePlanAPI = (id) => axios.delete(BASE_REST_API_URL + '/' + id)
+    return response
+}
+
+export const createPlanAPI = async (plan) => {
+    const toastId = loadingMessage('데이터 추가중...')
+    const response = await axios.post(BASE_REST_API_URL, plan)
+    completeMessage(toastId, '데이터 추가 완료')
+
+    return response
+}
+
+export const updatePlanAPI = async (id, plan) => {
+    const toastId = loadingMessage('데이터 업데이트 중...')
+    const response = await axios.put(BASE_REST_API_URL + '/' + id, plan)
+    completeMessage(toastId, '데이터 업데이트 완료')
+
+    return response
+}
+
+export const deletePlanAPI = async (id) => {
+    const toastId = loadingMessage('데이터 삭제중...')
+    const response = await axios.delete(BASE_REST_API_URL + '/' + id)
+    completeMessage(toastId, '데이터 삭제 완료')
+
+    return response
+}

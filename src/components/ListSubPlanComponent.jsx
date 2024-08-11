@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { deleteSubPlanAPI, getAllSubPlansAPI } from '../services/SubPlanService';
 import { getDailyPlanAPI } from '../services/DailyPlanService';
 import { currencyOptions } from '../Options/CurrencyOption';
+import { handlingError } from '../Exception/HandlingError'
+import { noDataMessage } from './Message/NoDataMessage';
 
 /**
  * ListSubPlanComponent
@@ -50,7 +52,7 @@ const ListSubPlanComponent = () => {
     }, [dailyId])
 
     async function setDailyPlanName(dailyId){
-        const response = await getDailyPlanAPI(dailyId).catch(error => console.error(error)) 
+        const response = await getDailyPlanAPI(dailyId, false).catch(error => handlingError(error, navigator)) 
 
         // 상태 변수에 현재 daily plan 이름을 set
         setDailyName(response.data.dailyName)
@@ -59,8 +61,8 @@ const ListSubPlanComponent = () => {
 
     // 모든 Sub Plan 정보를 서버에서 받아와서 state variable에 set
     async function getAllSubPlans(dailyId){
-        const response = await getAllSubPlansAPI(dailyId).catch(error => console.error(error)) 
-        console.log(response.data)
+        const response = await getAllSubPlansAPI(dailyId).catch(error => handlingError(error, navigator)) 
+        noDataMessage(response.data.length) // 데이터 없는 경우 없다고 사용자에게 message 출력
 
         // 정상적으로 response 받으면 reponse.data로 state 갱신
         setSubPlans(response.data)
@@ -84,7 +86,7 @@ const ListSubPlanComponent = () => {
             return
         
         // delete REST API 호출 발생
-        const response = await deleteSubPlanAPI(subId).catch(error => console.error(error))
+        const response = await deleteSubPlanAPI(subId).catch(error => handlingError(error, navigator))
 
         // delete 성공 후 페이지 구성을 위해 DB 정보를 다시 받아와서 state variable 갱신
         getAllSubPlans(dailyId);

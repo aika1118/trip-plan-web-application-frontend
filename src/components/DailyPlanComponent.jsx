@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { createDailyPlanAPI, getDailyPlanAPI, updateDailyPlanAPI } from '../services/DailyPlanService';
+import { handlingError } from '../Exception/HandlingError'
 
 /**
  * DailyPlanComponent
@@ -49,7 +50,7 @@ const DailyPlanComponent = () => {
 
     // dailyId를 통해 daily plan 정보 GET 후 daily Name, plan Id를 상태변수에 저장
     async function setDailyPlanState(dailyIdFromParams){
-        const response = await getDailyPlanAPI(dailyIdFromParams).catch(error => console.error(error))
+        const response = await getDailyPlanAPI(dailyIdFromParams).catch(error => handlingError(error, navigator))
         console.log(response)
         setPlanId(response.data.planId)
         setDailyName(response.data.dailyName)
@@ -97,7 +98,7 @@ const DailyPlanComponent = () => {
         console.log(dailyPlan)
         
         if (params.dailyIdFromParamsWhenUpdate){ // Update 연산
-            const response = await updateDailyPlanAPI(params.dailyIdFromParamsWhenUpdate, dailyPlan).catch(error => console.error(error))
+            const response = await updateDailyPlanAPI(params.dailyIdFromParamsWhenUpdate, dailyPlan).catch(error => handlingError(error, navigator))
             console.log(response.data)
             navigator(`/daily-plans/${response.data.planId}`) // plan component로 돌아가기
 
@@ -105,7 +106,7 @@ const DailyPlanComponent = () => {
         }
 
         // Add 연산
-        const response = await createDailyPlanAPI(dailyPlan).catch(error => console.error(error))
+        const response = await createDailyPlanAPI(dailyPlan).catch(error => handlingError(error, navigator))
         console.log(response.data);
         navigator(`/daily-plans/${response.data.planId}`) // plan component로 돌아가기
     }

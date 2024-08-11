@@ -1,5 +1,7 @@
 import axios from "axios"
 import { getToken } from "./AuthService";
+import { loadingMessage } from "../components/Message/LoadingMessage";
+import { completeMessage } from "../components/Message/CompleteMessage";
 
 /**
  * DailyPlanService
@@ -22,12 +24,44 @@ axios.interceptors.request.use(function (config) {
 const BASE_REST_API_URL = 'http://localhost:8080/api/daily-plans';
 
 
-export const getAllDailyPlansAPI = (planId) => axios.get(BASE_REST_API_URL + '/plan/' + planId);
+export const getAllDailyPlansAPI = async (planId) => {
+    const toastId = loadingMessage('데이터 가져오는 중...')
+    const response = await axios.get(BASE_REST_API_URL + '/plan/' + planId);
+    completeMessage(toastId, '데이터 가져오기 완료')
 
-export const getDailyPlanAPI = (dailyId) => axios.get(BASE_REST_API_URL + '/' + dailyId)
+    return response
+}
 
-export const createDailyPlanAPI = (dailyPlan) => axios.post(BASE_REST_API_URL, dailyPlan)
+export const getDailyPlanAPI = async (dailyId, isShowing = true) => { // isShowing : 메세지 출력 여부 (기본값 : true)
+    if (!isShowing) return axios.get(BASE_REST_API_URL + '/' + dailyId)
 
-export const updateDailyPlanAPI = (dailyId, dailyPlan) => axios.put(BASE_REST_API_URL + '/' + dailyId, dailyPlan)
+    const toastId = loadingMessage('데이터 가져오는 중...')
+    const response = await axios.get(BASE_REST_API_URL + '/' + dailyId)
+    completeMessage(toastId, '데이터 가져오기 완료')
 
-export const deleteDailyPlanAPI = (dailyId) => axios.delete(BASE_REST_API_URL + '/' + dailyId)
+    return response
+}
+
+export const createDailyPlanAPI = async (dailyPlan) => {
+    const toastId = loadingMessage('데이터 추가중...')
+    const response = await axios.post(BASE_REST_API_URL, dailyPlan)
+    completeMessage(toastId, '데이터 추가 완료')
+
+    return response
+}
+
+export const updateDailyPlanAPI = async (dailyId, dailyPlan) => {
+    const toastId = loadingMessage('데이터 업데이트 중...')
+    const response = await axios.put(BASE_REST_API_URL + '/' + dailyId, dailyPlan)
+    completeMessage(toastId, '데이터 업데이트 완료')
+
+    return response
+}
+
+export const deleteDailyPlanAPI = async (dailyId) => {
+    const toastId = loadingMessage('데이터 삭제중...')
+    const response = await axios.delete(BASE_REST_API_URL + '/' + dailyId)
+    completeMessage(toastId, '데이터 삭제 완료')
+
+    return response
+}

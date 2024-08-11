@@ -13,6 +13,8 @@ import ListSubPlanComponent from './components/ListSubPlanComponent'
 import SubPlanComponent from './components/SubPlanComponent'
 import LayoutComponent from './components/Layout/LayoutComponent'
 import MainLayoutComponent from './components/Layout/MainLayoutComponent'
+import CustomToastContainer from './components/Message/CustomToastContainer'
+import NotFoundComponent from './components/NotFoundComponent'
 
 function App() {
 
@@ -100,12 +102,27 @@ function App() {
                                 <SubPlanComponent/>
                             </AuthenticatedRoute>
                         }></Route>
+
+                        {/* http://localhost:3000/not-found */}
+                        <Route path='/not-found' element = {
+                            <AuthenticatedRoute>
+                                <NotFoundComponent/>
+                            </AuthenticatedRoute>
+                        }></Route>
+
+                        {/* 이외의 없는 경로로 라우팅 시도 시 */}
+                        <Route path='*' element = {
+                            <AuthenticatedRoute>
+                                <NotFoundComponent/>
+                            </AuthenticatedRoute>
+                        }></Route>
                         
                     </Routes>
                 </MainLayoutComponent>
             <FooterComponent/>
         </BrowserRouter>
-    </LayoutComponent>                      
+    </LayoutComponent> 
+    <CustomToastContainer/>                     
     </>
   )
 }

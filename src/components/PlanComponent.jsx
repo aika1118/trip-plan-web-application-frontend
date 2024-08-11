@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createPlanAPI, getPlanAPI, updatePlanAPI } from '../services/PlanService';
 import { getUserIdAPI } from '../services/UserService';
 import { getLoggedInUser } from '../services/AuthService';
+import { handlingError } from '../Exception/HandlingError'
 
 /**
  * PlanComponent
@@ -42,7 +43,7 @@ const PlanComponent = () => {
 
     // username을 통해 userId 가져오기 (using REST API)
     async function getUserId(user){
-        const response = await getUserIdAPI(user).catch(error => console.error(error))
+        const response = await getUserIdAPI(user).catch(error => handlingError(error, navigator))
         setUserId(response.data)
     }
 
@@ -58,7 +59,7 @@ const PlanComponent = () => {
     // "/edit-plan/planIdFromParamsWhenUpdate" 접근 시 form input에 state variable이 입력된 상태로 노출됨 (사용자가 값을 update하기 편하도록)
 
     async function setPlanState(planIdFromParamsWhenUpdate){
-        const response = await getPlanAPI(planIdFromParamsWhenUpdate).catch(error => console.error(error))
+        const response = await getPlanAPI(planIdFromParamsWhenUpdate).catch(error => handlingError(error, navigator))
         console.log(response)
         setPlanName(response.data.planName)
     }
@@ -75,7 +76,7 @@ const PlanComponent = () => {
         
         // planIdFromParamsWhenUpdate(planId)는 기본키로 plan을 고유하게 식별할 수 있는 값
         if (planIdFromParamsWhenUpdate){ // 현재 URL에 params id가 있음 = Update 연산
-            const response = await updatePlanAPI(planIdFromParamsWhenUpdate, plan).catch(error => console.error(error))
+            const response = await updatePlanAPI(planIdFromParamsWhenUpdate, plan).catch(error => handlingError(error, navigator))
             console.log(response.data)
             navigator('/plans')
 
@@ -83,7 +84,7 @@ const PlanComponent = () => {
         }
 
         // Add 연산
-        const response = await createPlanAPI(plan).catch(error => console.error(error))
+        const response = await createPlanAPI(plan).catch(error => handlingError(error, navigator))
         console.log(response.data);
         navigator('/plans')
     }
