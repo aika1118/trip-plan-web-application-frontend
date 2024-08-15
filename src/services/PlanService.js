@@ -1,8 +1,8 @@
 import axios from "axios"
 import { getToken } from "./AuthService";
-import { toast } from "react-toastify";
 import { loadingMessage } from "../components/Message/LoadingMessage";
 import { completeMessage } from "../components/Message/CompleteMessage";
+import urlConfig from "../config/RestApiUrlConfig";
 
 /**
  * PlanService
@@ -24,7 +24,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 
-const BASE_REST_API_URL = 'http://localhost:8080/api/plans';
+const BASE_REST_API_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + "/api/plans"
 
 
 export const getAllPlansAPI = async (username) => {

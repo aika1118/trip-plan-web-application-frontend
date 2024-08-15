@@ -1,5 +1,6 @@
 import axios from "axios"
 import { getToken } from "./AuthService";
+import urlConfig from "../config/RestApiUrlConfig";
 
 /**
  * UserService
@@ -21,7 +22,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 
-const BASE_REST_API_URL = 'http://localhost:8080/api/users';
+const BASE_REST_API_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + "/api/users"
 
 
 export const getUserIdAPI = (username) => axios.get(BASE_REST_API_URL + '/' + username);

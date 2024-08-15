@@ -2,6 +2,7 @@ import axios from "axios"
 import { getToken } from "./AuthService";
 import { loadingMessage } from "../components/Message/LoadingMessage";
 import { completeMessage } from "../components/Message/CompleteMessage";
+import urlConfig from "../config/RestApiUrlConfig";
 
 /**
  * DailyPlanService
@@ -21,7 +22,9 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-const BASE_REST_API_URL = 'http://localhost:8080/api/daily-plans';
+
+
+const BASE_REST_API_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + "/api/daily-plans"
 
 
 export const getAllDailyPlansAPI = async (planId) => {

@@ -2,6 +2,7 @@ import axios from "axios"
 import { getToken } from "./AuthService";
 import { loadingMessage } from "../components/Message/LoadingMessage";
 import { completeMessage } from "../components/Message/CompleteMessage";
+import urlConfig from "../config/RestApiUrlConfig";
 
 /**
  * SubPlanService
@@ -21,7 +22,8 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-const BASE_REST_API_URL = 'http://localhost:8080/api/sub-plans';
+
+const BASE_REST_API_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + "/api/sub-plans"
 
 
 export const getAllSubPlansAPI = async (dailyId) => {

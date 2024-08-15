@@ -1,6 +1,7 @@
 import axios from "axios";
+import urlConfig from "../config/RestApiUrlConfig";
 
-const AUTH_REST_API_BASE_URL = 'http://localhost:8080/api/auth'
+const AUTH_REST_API_BASE_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + '/api/auth'
 
 // register API 호출
 export const registerAPICall = (registerObj) => axios.post(AUTH_REST_API_BASE_URL + '/register', registerObj)
