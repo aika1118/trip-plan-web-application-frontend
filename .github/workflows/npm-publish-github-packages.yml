@@ -39,8 +39,8 @@ jobs:
     # Docker 이미지를 빌드하고 Docker Hub에 푸시
     - name: Build and push Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_IMAGE_NAME_FRONTEND }} .
-        docker push ${{ secrets.DOCKER_IMAGE_NAME_FRONTEND }}
+        docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
+        docker push ${{ secrets.DOCKER_IMAGE_NAME }}
 
     # EC2 서버로 배포
     - name: Deploy to EC2
