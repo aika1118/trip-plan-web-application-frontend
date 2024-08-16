@@ -51,17 +51,17 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }} 
         port: ${{ secrets.EC2_PORT }} 
         script: |
-          # docker 이미지 가져오기
-          docker pull ${{ secrets.DOCKER_IMAGE_NAME }}
 
           # 현재 프로젝트에 해당하는 기존 컨테이너 종료
           docker stop $(docker ps -q --filter "ancestor=${{ secrets.DOCKER_IMAGE_NAME }}")
 
+          # 중지된 컨테이너 제거 및 이미지 삭제
+          docker container prune -f && docker image prune -a -f
+
+          # docker 이미지 가져오기
+          docker pull ${{ secrets.DOCKER_IMAGE_NAME }}
+
           # 새로운 컨테이너를 백그라운드에서 실행
           docker run -d --log-driver=syslog -p 80:80 ${{ secrets.DOCKER_IMAGE_NAME }}
 
-          # 종료된(exited) 상태의 모든 컨테이너 제거
-          docker rm $(docker ps --filter 'status=exited' -a -q)
-
-          # 사용되지 않는 모든 Docker 이미지를 강제로 제거
-          docker image prune -a -f
+          
