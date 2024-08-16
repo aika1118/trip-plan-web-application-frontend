@@ -28,9 +28,9 @@ const BASE_REST_API_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + "/ap
 
 
 export const getAllDailyPlansAPI = async (planId) => {
-    const toastId = loadingMessage('데이터 가져오는 중...')
+    //const toastId = loadingMessage('데이터 가져오는 중...')
     const response = await axios.get(BASE_REST_API_URL + '/plan/' + planId);
-    completeMessage(toastId, '데이터 가져오기 완료')
+    //completeMessage(toastId, '데이터 가져오기 완료')
 
     return response
 }
@@ -38,9 +38,9 @@ export const getAllDailyPlansAPI = async (planId) => {
 export const getDailyPlanAPI = async (dailyId, isShowing = true) => { // isShowing : 메세지 출력 여부 (기본값 : true)
     if (!isShowing) return axios.get(BASE_REST_API_URL + '/' + dailyId)
 
-    const toastId = loadingMessage('데이터 가져오는 중...')
+    //const toastId = loadingMessage('데이터 가져오는 중...')
     const response = await axios.get(BASE_REST_API_URL + '/' + dailyId)
-    completeMessage(toastId, '데이터 가져오기 완료')
+    //completeMessage(toastId, '데이터 가져오기 완료')
 
     return response
 }

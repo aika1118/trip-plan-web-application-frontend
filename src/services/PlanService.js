@@ -28,9 +28,9 @@ const BASE_REST_API_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + "/ap
 
 
 export const getAllPlansAPI = async (username) => {
-    const toastId = loadingMessage('데이터 가져오는 중...')
+    //const toastId = loadingMessage('데이터 가져오는 중...')
     const response = await axios.get(BASE_REST_API_URL + '/user/' + username) // axios는 비동기 작업, 흐름제어를 위해 await 사용
-    completeMessage(toastId, '데이터 가져오기 완료')
+    //completeMessage(toastId, '데이터 가져오기 완료')
 
     return response
 }
@@ -38,9 +38,9 @@ export const getAllPlansAPI = async (username) => {
 export const getPlanAPI = async (id, isShowing = true) => { // isShowing : 메세지 출력 여부 (기본값 : true)
     if (!isShowing) return axios.get(BASE_REST_API_URL + '/' + id)
 
-    const toastId = loadingMessage('데이터 가져오는 중...')
+    //const toastId = loadingMessage('데이터 가져오는 중...')
     const response = await axios.get(BASE_REST_API_URL + '/' + id)
-    completeMessage(toastId, '데이터 가져오기 완료')
+    //completeMessage(toastId, '데이터 가져오기 완료')
 
     return response
 }
