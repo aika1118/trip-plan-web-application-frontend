@@ -1,0 +1,67 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Deploy React App
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    # 환경변수 설정
+    - name: set .env
+      run: |
+        echo "VITE_APP_PUBLIC_IP=$EC2_HOST" >> .env
+      env:
+        EC2_HOST: ${{secrets.EC2_HOST}}
+
+    - name: Build React app
+      run: npm run build
+
+
+    # Docker 로그인
+    - name: Log in to Docker Hub
+      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    # Docker 이미지를 빌드하고 Docker Hub에 푸시
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_IMAGE_NAME_FRONTEND }} .
+        docker push ${{ secrets.DOCKER_IMAGE_NAME_FRONTEND }}
+
+    # EC2 서버로 배포
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_SSH_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }} 
+        port: ${{ secrets.EC2_PORT }} 
+        script: |
+          # docker 이미지 가져오기
+          docker pull ${{ secrets.DOCKER_IMAGE_NAME }}
+
+          # 현재 존재하는 모든 컨테이너 정지
+          docker stop $(docker ps -a -q) 
+
+          # 새로운 컨테이너를 백그라운드에서 실행
+          docker run -d --log-driver=syslog -p 8080:8080 ${{ secrets.DOCKER_IMAGE_NAME }}
+
+          # 종료된(exited) 상태의 모든 컨테이너 제거
+          docker rm $(docker ps --filter 'status=exited' -a -q)
+
+          # 사용되지 않는 모든 Docker 이미지를 강제로 제거
+          docker image prune -a -f
