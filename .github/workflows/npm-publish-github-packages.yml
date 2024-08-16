@@ -58,7 +58,7 @@ jobs:
           docker stop $(docker ps -a -q) 
 
           # 새로운 컨테이너를 백그라운드에서 실행
-          docker run -d --log-driver=syslog -p 8080:8080 ${{ secrets.DOCKER_IMAGE_NAME }}
+          docker run -d --log-driver=syslog -p 80:80 ${{ secrets.DOCKER_IMAGE_NAME }}
 
           # 종료된(exited) 상태의 모든 컨테이너 제거
           docker rm $(docker ps --filter 'status=exited' -a -q)
