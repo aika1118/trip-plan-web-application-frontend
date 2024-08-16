@@ -1,5 +1,5 @@
 const DEV = 'localhost'
-const PUBLISH = '35.199.161.234'
+const PUBLISH = import.meta.env.VITE_APP_PUBLIC_IP
 
 const urlConfig = {
     IP: PUBLISH,
