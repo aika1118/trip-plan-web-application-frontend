@@ -1,6 +1,14 @@
 import axios from "axios";
 import urlConfig from "../config/RestApiUrlConfig";
 
+/**
+ * AuthService
+ * 
+ * 로그인, 회원가입을 위한 REST API 호출 정의
+ * 로그인 후 인증 정보 관련 데이터를 조작하는 함수 정의
+ * 
+ */
+
 const AUTH_REST_API_BASE_URL = 'http://' + urlConfig.IP + ':' + urlConfig.PORT + '/api/auth'
 
 // register API 호출

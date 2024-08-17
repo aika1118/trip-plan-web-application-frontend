@@ -3,6 +3,13 @@ import { loginAPICall, saveLoggedInUser, storeToken } from '../services/AuthServ
 import { useNavigate } from 'react-router-dom';
 import { handlingError } from '../Exception/HandlingError'
 
+/**
+ * LoginComponent
+ * 
+ * 로그인 화면을 구성하는 Component
+ * 
+ */
+
 const LoginComponent = () => {
 
     const [usernameOrEmail, setUsername] = useState('')

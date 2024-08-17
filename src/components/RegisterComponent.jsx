@@ -4,6 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { handlingError } from '../Exception/HandlingError'
 
+/**
+ * RegisterComponent
+ * 
+ * 회원가입 화면을 구성하는 Component
+ * 
+ */
+
 const RegisterComponent = () => {
 
     const [username, setUsername] = useState('')

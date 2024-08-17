@@ -1,6 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+/**
+ * NotFoundComponent
+ * 
+ * http 404 status를 반환받을 때 라우팅되는 component
+ * 
+ */
+
 const NotFoundComponent = () => {
   return (
     <div>

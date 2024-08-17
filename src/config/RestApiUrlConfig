@@ -1,9 +1,0 @@
-const DEV = 'localhost'
-const PUBLISH = import.meta.env.VITE_APP_PUBLIC_IP
-
-const urlConfig = {
-    IP: PUBLISH,
-    PORT: '8080',
-  };
-  
-  export default urlConfig;

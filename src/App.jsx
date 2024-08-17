@@ -16,6 +16,13 @@ import MainLayoutComponent from './components/Layout/MainLayoutComponent'
 import CustomToastContainer from './components/Message/CustomToastContainer'
 import NotFoundComponent from './components/NotFoundComponent'
 
+/**
+ * App.jsx
+ * 
+ * React 애플리케이션의 루트 컴포넌트를 정의하여 전체 애플리케이션의 구조와 라우팅을 설정
+ * 
+ */
+
 function App() {
 
   // component 렌더링 하기 전 인증 상태 먼저 체크

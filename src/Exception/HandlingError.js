@@ -1,9 +1,15 @@
 import { toast } from "react-toastify";
 
+/**
+ * HandlingError
+ * 
+ * REST API 호출 후 error 발생 시 http status에 따라 toast 출력하는 함수
+ * 
+ */
+
 export const handlingError = (error, navigator) => {
     if (!error.response){
         toast.error('알 수 없는 오류 발생')
-        throw error
     }
 
     const { status, data } = error.response;

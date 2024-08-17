@@ -2,6 +2,13 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+/**
+ * CustomToastContainer
+ * 
+ * toast의 공통적인 형식을 지정
+ * 
+ */
+
 const CustomToastContainer = () => {
   return (
     <ToastContainer
